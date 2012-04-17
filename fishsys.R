@@ -11,7 +11,7 @@ fishsysDES <- function (Time, State, Pars) {
   })
 }
 
-fishsys <- function(c=2, O=1, p=4, r=1.1, d=0.125, K=20, q=0.25, a=0.5){
+fishsys <- function(c=2, O=1, p=4, r=1.1, d=0.125, K=20, q=0.25, a=2){
   function(x,y=NULL){
     if (is.null(y)) {
       y <- x[2]; x <- x[1];
@@ -29,7 +29,7 @@ r <- 1.1
 d <- 0.125
 K <- 20
 q <- 0.25
-a <- 0.5
+a <- 2
 
 # please source() from http://www.macalester.edu/~kaplan/math135/pplane.r
 nullclines(fishsys(),c(0,25),c(0,50),40)
@@ -54,8 +54,8 @@ draw.traj <- function(func, Pars, tStart=0, tEnd=1, tCut=10, loc.num=1, color = 
 }
 
 
-nullclines(fishsys(c=2, O=1, p=4, r=1.1, d=.125, K=20, q=0.25, a=0.5),c(0.001,25),c(0.001,30),250)
-#showcontours(fishsys(c=2, O=1, p=4, r=1.1, d=.125, K=20, q=0.25, a=0.5),c(0.01,25),c(0.01,30),250)
-phasearrows(fishsys(c=2, O=1, p=4, r=1.1, d=.125, K=20, q=0.25, a=0.5),c(0,25),c(0,30),20, add=TRUE)
-traj <- draw.traj(func=fishsysDES, Pars=c(c=2, O=1, p=4, r=1.1, d=.125, K=20, q=0.25, a=0.5), tEnd=500, tCut=10000, loc.num=4)
-phasetraj(fishsys(c=2, O=1, p=4, r=1.1, d=.125, K=20, q=0.25, a=0.5), tend=10)
+nullclines(fishsys(c=2, O=1, p=4, r=1.1, d=0.0005, K=20, q=0.25, a=2),c(0.001,25),c(0.001,30),250)
+#showcontours(fishsys(c=2, O=1, p=4, r=1.1, d=0.0005, K=20, q=0.25, a=2),c(0.01,25),c(0.01,30),250)
+phasearrows(fishsys(c=2, O=1, p=4, r=1.1, d=0.0005, K=20, q=0.25, a=2),c(0,25),c(0,30),20, add=TRUE)
+traj <- draw.traj(func=fishsysDES, Pars=c(c=2, O=1, p=4, r=1.1, d=0.0005, K=20, q=0.25, a=2), tEnd=500, tCut=10000, loc.num=4)
+phasetraj(fishsys(c=2, O=1, p=4, r=1.1, d=0.0005, K=20, q=0.25, a=2), tend=10)

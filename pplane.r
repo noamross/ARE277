@@ -145,43 +145,23 @@ showcontours <- function(fun,xlims, ylims, resol=50,add=F, colors=c('blue', 'red
   contour(x[,1],y[1,],z2, add=T, col=colors[2]); 
 }
 
-
-nullclines2 <- function(fun,xlims, ylims, resol=50,add=F, colors=c('blue', 'blue')) {
-  xs <- seq(xlims[1],xlims[2], length=resol);
-  ys <- seq(ylims[1],ylims[2], length=resol);
-  z <- fun(x,y);
-  xvals = rep(0, length=resol)
-  yvals = rep(0, length=resol)
-  xfun <- function(y,x) { a <- z(x,y); return(a[1])}
-  yfun <- function(x,y) { a <- z(x,y); return(a[2])}
-  for(i in 1:resol) {
-    xvals[i] <- uniroot(xfun,x=xs[i], ylims)$root
-    yvals[i] <- uniroot(yfun,y=ys[i], xlims)$root
-  }
-  if(add==F) {
-    plot(1,xlim=xlims, ylim=ylims, type='n')
-  }
-  lines(xs, xvals, col=colors[1])
-  lines(ys, yvals, col=colors[2])
-}
-
-nullclines <- function(fun,xlims, ylims, resol=50, add=F,colors=c('blue', 'blue')) {
-  x <- matrix(seq(xlims[1],xlims[2], length=resol), byrow=F, resol,resol);
-  y <- matrix(seq(ylims[1],ylims[2], length=resol),byrow=T, resol, resol);
+nullclines <- function(fun,xlims, ylims, resol=50, add=FALSE,colors=c('blue', 'blue'),...) {
+  x <- matrix(seq(xlims[1],xlims[2], length=resol), byrow=FALSE, resol,resol);
+  y <- matrix(seq(ylims[1],ylims[2], length=resol), byrow=TRUE, resol, resol);
   npts = resol*resol;
   z <- fun(x,y);
   z1 <- matrix(z[1:npts], resol, resol);
   z2 <- matrix(z[(npts+1):(2*npts)], resol, resol);
-  contour(x[,1],y[1,],z1,levels=c(0), add=add, col=colors[1], drawlabels=FALSE, lwd=2);
+  contour(x[,1],y[1,],z1,levels=c(0), col=colors[1], drawlabels=FALSE, add=add, lwd=2,...);
   contour(x[,1],y[1,],z2,levels=c(0), add=T, col=colors[2], drawlabels=FALSE, lwd=2); 
 }
 
-phasearrows <- function(fun,xlims,ylims,resol=20, col='grey30', add=F) {
+phasearrows <- function(fun,xlims,ylims,resol=20, col='grey30', add=FALSE) {
   if (add==F) {
     plot(1,xlim=xlims, ylim=ylims, type='n');
   }
-  x <- matrix(seq(xlims[1],xlims[2], length=resol), byrow=T, resol,resol);
-  y <- matrix(seq(ylims[1],ylims[2], length=resol),byrow=F, resol, resol);
+  x <- matrix(seq(xlims[1],xlims[2], length=resol), byrow=TRUE, resol,resol);
+  y <- matrix(seq(ylims[1],ylims[2], length=resol),byrow=FALSE, resol, resol);
   npts <- resol*resol;
   xspace <- abs(diff(xlims))/(resol*5);
   yspace <- abs(diff(ylims))/(resol*5);
@@ -198,8 +178,8 @@ phasearrows <- function(fun,xlims,ylims,resol=20, col='grey30', add=F) {
   arrows(c(x), c(y), c(x+dt*z1/((lens2)+.1)), c(y+dt*z2/((lens2)+.1)),length=.04, col=col);
 }
 
-phasetraj <- function(fun,tdur=1,tstart=0,tend=tstart+tdur,color='orange'){
-  x0 <- locator(n=1);
+phasetraj <- function(fun,tdur=1,tstart=0,tend=tstart+tdur,color='red'){
+  x0 <- locator(n=1, "p", pch=16, col='red');
   traj <- rk(fun,c(x0$x, x0$y),tstart,tend);
   points(x0$x,x0$y);  
   lines(traj$x[,1], traj$x[,2], col=color);
