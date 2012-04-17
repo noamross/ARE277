@@ -1,7 +1,7 @@
 #Modified from 'http://www.r-bloggers.com/r-tools-for-dynamical-systems-r-pplane-to%C2%A0draw%C2%A0phase%C2%A0planes/'
 
 library(deSolve)
-require(rethinking)
+require(rethinking)  #this isn't an easily available library, but it isn't neccessary.  It just has the function col.alpha to adjust colors.  You might need to change the color functions if you don't have it.
 
 watersysDES <- function (Time, State, Pars) {
   with(as.list(c(State, Pars)), {
