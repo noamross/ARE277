@@ -71,8 +71,8 @@ d <- 0.75
 r <- 0.05
 F <- 10
 nullclines(watersys(d=d,r=r, F=F),c(0,20),c(-25,60),250,xlab="Revervoir Level (w) in megaliters", ylab="Sales rate (s) in megaliters/day ", family="serif")
-Ws <- c(12, 12, 11, 11, 10, 15, 15, 12.5)
-Ts <- c(10, 20, 10, 20, 18, 10, 15, 15)
+Ws <- c(12, 12, 11, 11)
+Ts <- c(10, 20, 10, 20)
 for (j in 1:length(Ws)) {
   plot.traj(d=d,r=r,F=F,W=Ws[j],T=Ts[j])
 }

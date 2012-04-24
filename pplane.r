@@ -183,6 +183,7 @@ phasetraj <- function(fun,tdur=1,tstart=0,tend=tstart+tdur,color='red'){
   traj <- rk(fun,c(x0$x, x0$y),tstart,tend);
   points(x0$x,x0$y);  
   lines(traj$x[,1], traj$x[,2], col=color);
+  return(traj$x)
 }
 
 #nullclines(predatorprey(),c(-10,100),c(-10,100),40)
