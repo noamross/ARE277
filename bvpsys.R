@@ -65,14 +65,6 @@ beta <- 1
 a <- 1.1
 b <- 1.1
 r <- 0.1
-par(col="#45462f", col.axis="#45462f", col.lab="#45462f", col.main="#45462f", col.sub="#45462f", family="serif")
-nullclines(bvp(alpha=alpha, beta=beta, a=a,b=b,r=r),c(0,1),c(0,0.4),250,xlab="Fish stock (x)", ylab="Harvest rate (h)", colors=c("#45462f", "#45462f"), xaxs="i", yaxs="i")
-phasearrows(bvp(alpha=alpha, beta=beta, a=a,b=b,r=r),c(0,1),c(0,0.4),30, add=TRUE, col="grey60")
-text(0, 0.23375, "h=0.23375", adj=c(-0.1,-0.3))
-
-
-traj <- draw.traj(bvpDES, Pars=parms, tStart=0, tEnd=10, tCut=50)
-
 
 parms <- c(                   # Set our parameters
   alpha <- 0.4675,
@@ -82,6 +74,16 @@ parms <- c(                   # Set our parameters
   r <- 0.1
   )
 
+par(col="#45462f", col.axis="#45462f", col.lab="#45462f", col.main="#45462f", col.sub="#45462f", family="serif")
+nullclines(bvp(alpha=alpha, beta=beta, a=a,b=b,r=r),c(0,1),c(0,0.4),250,xlab="Fish stock (x)", ylab="Harvest rate (h)", colors=c("#45462f", "#45462f"), xaxs="i", yaxs="i")
+phasearrows(bvp(alpha=alpha, beta=beta, a=a,b=b,r=r),c(0,1),c(0,0.4),30, add=TRUE, col="grey60")
+text(0, 0.23375, "h=0.23375", adj=c(-0.1,-0.3))
+
+
+traj <- draw.traj(bvpDES, Pars=parms, tStart=0, tEnd=10, tCut=50)
+
+
+
 
 x0 <- 0.2
 xT = 0.6
@@ -89,7 +91,7 @@ T <- 10
 yini <- c(x=x0, y=NA)         # Set initial conditions, leaving unknowns as NA
 yend <- c(x=xT, y=NA)         # Set final conidtions, leaving unknowns as NA
 times <- seq(0,T, length.out=(T+1)) # Give the the desired time outputs
-out1s <- bvpshoot(yini=yini, x=times, func=bvpDES, yend=yend, parms=parms, guess = 0.1, method="bdf")
+#out1s <- bvpshoot(yini=yini, x=times, func=bvpDES, yend=yend, parms=parms, guess = 0.1, method="bdf")
 out1 <- bvpcol(yini=yini, x=times, func=bvpDES, yend=yend, parms=parms)
 points(out1[1,2], out1[1,3], col="springgreen4", pch=16)
 points(out1[,2], out1[,3], col=col.alpha("springgreen4", alpha=0.5), pch=16, cex=0.75)
