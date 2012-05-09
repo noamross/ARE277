@@ -5,8 +5,8 @@ ppDES <- function (Time, State, Pars) {
   with(as.list(c(State, Pars)), {
     dx = r*x*(1 - x/K) - a*x*y - q1*E1*x
     dy = (B + a*x)*y - (n/2)*(y^2) - q2*E2*y
-    dE1 = (1/(2*c1))*(p1*q1*x*(r*(1 - 2*x/K) - a*y - d) + (c0 + 2*c1*E1)*(r*x/K + d) + q1*a*x*(p2*y - (c0 + 2*c1*E2)/q2))
-    dE2 = (1/(2*c1))*(p2*q2*y*(B + a*x - n*y - d) + (c0 + 2*c1*E2)*(0.5*n*y + d) - q2*a*y*(p1*x - (c0 + 2*c1*E1)/q1))
+    dE1 = (1/(2*c1))*(p1*q1*x*(r*(1 - 2*x/K) - a*y - d) + (c0 + 2*c1*E1)*(r*x/K + d) - q1*a*x*(p2*y - (c0 + 2*c1*E2)/q2))
+    dE2 = (1/(2*c1))*(p2*q2*y*(B + a*x - n*y - d) + (c0 + 2*c1*E2)*(0.5*n*y + d) + q2*a*y*(p1*x - (c0 + 2*c1*E1)/q1))
     return(list(c(dx, dy, dE1, dE2)))
   })
 }
