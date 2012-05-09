@@ -11,12 +11,10 @@ ppDES <- function (Time, State, Pars) {
   })
 }
 
-
-
 r <- 0.85
 n <- 1
 K <- 1
-a <- 0.5
+a <- 0
 B <- 0.25
 q1 <- 1
 q2 <- 1
@@ -34,10 +32,10 @@ E2T <- 0
 
 parms <- c(r=r, n=n, K=K, a=a, B=B, q1=q1, q2=q2, d=d, p1=p1, p2=p2, c0=c0, c1=c1)
 
-yini <- c(x=x0, y=y0, E1=NA, E2=NA)         # Set initial conditions, leaving unknowns as NA
-yend <- c(x=NA, y=NA, E1=E1T, E2=E2T)         # Set final conidtions, leaving unknowns as NA
+yini <- c(x=1, y=1, E1=NA, E2=NA)         # Set initial conditions, leaving unknowns as NA
+yend <- c(x=NA, y=NA, E1=0, E2=0)         # Set final conidtions, leaving unknowns as NA
 times <- seq(from=0, to=T, length.out=T+1)
-out1 <- bvptwp(yini=yini, x=times, func=ppDES, yend=yend, parms=parms)
+out1 <- bvpcol(yini=yini, x=times, func=ppDES, yend=yend, parms=parms)
 
 par(col="#45462f", col.axis="#45462f", col.lab="#45462f", col.main="#45462f", col.sub="#45462f", family="serif", mfrow=c(2,1))
 
@@ -45,4 +43,5 @@ points(out2[1,2], out2[1,3], col="tomato4", pch=16)
 points(out2[,2], out2[,3], col=col.alpha("tomato4", alpha=0.5), pch=16, cex=0.75)
 lines(out2[,2], out2[,3], col="tomato4", lwd=2)
 
-some <- ode(y=c(x=x0,y=y0,E1=1,E2=1), times, ppDES, parms, method="bdf"); plot(some, ylim=c(0,2));tail(some)
+some <- ode(y=c(x=x0,y=y0,E1=1,E2=1), times, ppDES, parms, method="bdf"); plot(some);tail(some)
+
