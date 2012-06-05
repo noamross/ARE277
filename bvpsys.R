@@ -5,8 +5,8 @@ require(rethinking)  #this isn't an easily available library, but it isn't necce
 
 bvpDES <- function (Time, State, Pars) {
   with(as.list(c(State, Pars)), {
-    dx = a*x - b*(x^2) - y
-    dy = (r - a + (2*b*x))*(alpha - (2 * beta * y))/(-2*beta)
+    dx = y-p
+    dy = ry - c/(x^2)
     return(list(c(dx, dy)))
   })
 }
@@ -16,17 +16,13 @@ bvp <- function(alpha=0.4675, beta=1, a=1.1, b=1.1, r=0.1){
     if (is.null(y)) {
       y <- x[2]; x <- x[1];
     }
-    dx = a*x - b*(x^2) - y
-    dy = (r - a + 2*b*x)*(alpha - 2 * beta * y)/(-2*beta)
+    dx = y-p
+    dy = ry - c/(x^2)
     return(c(dx, dy))
   }
 }
 
-alpha <- 0.4675
-beta <- 1
-a <- 1.1
-b <- 1.1
-r <- 0.1
+
 
 # please source() from http://www.macalester.edu/~kaplan/math135/pplane.r
 
@@ -49,36 +45,31 @@ draw.traj <- function(func, Pars, tStart=0, tEnd=1, tCut=10, color = "red") {
   return(traj)
 }
 
-bvp <- function(alpha=0.4675, beta=1, a=1.1, b=1.1, r=0.1){
+bvp <- function(a=a, B=B, K=K,n=n){
   function(x,y=NULL){
     if (is.null(y)) {
       y <- x[2]; x <- x[1];
     }
-    dx = a*x - b*(x^2) - y
-    dy = (r - a + 2*b*x)*(alpha - 2 * beta * y)/(-2*beta)
+    dx = y-p
+    dy = ry - c/(x^2)
     return(c(dx, dy))
   }
 }
 
-alpha <- 0.4675
-beta <- 1
-a <- 1.1
-b <- 1.1
-r <- 0.1
+r <- 1
+p <- 1
+c <- 0.5
 
 parms <- c(                   # Set our parameters
-  alpha <- 0.4675,
-  beta <- 1,
-  a <- 1.1,
-  b <- 1.1,
-  r <- 0.1
+  r <- 0.1,
+  p <- 1,
+  c <- 0.5
   )
 
-par(col="#45462f", col.axis="#45462f", col.lab="#45462f", col.main="#45462f", col.sub="#45462f", family="serif")
-nullclines(bvp(alpha=alpha, beta=beta, a=a,b=b,r=r),c(0,1),c(0,0.4),250,xlab="Fish stock (x)", ylab="Harvest rate (h)", colors=c("#45462f", "#45462f"), xaxs="i", yaxs="i")
-phasearrows(bvp(alpha=alpha, beta=beta, a=a,b=b,r=r),c(0,1),c(0,0.4),30, add=TRUE, col="grey60")
-text(0, 0.23375, "h=0.23375", adj=c(-0.1,-0.3))
-
+par(col="#45462f", col.axis="#45462f", col.lab="#45462f", col.main="#45462f", col.sub="#45462f", family="serif", mfrow=c(1,1))
+nullclines(bvp(a=a, B=B, K=K,n=n),c(0,2),c(0,2),250,xlab="Fish stock (x)", ylab="Harvest rate (h)", colors=c("#45462f", "#45462f"), xaxs="i", yaxs="i")
+phasearrows(bvp(a=a, B=B, K=K,n=n),c(0,2),c(0,2),30, add=TRUE, col="grey60")
+points(x0,y0)
 
 traj <- draw.traj(bvpDES, Pars=parms, tStart=0, tEnd=10, tCut=50)
 
